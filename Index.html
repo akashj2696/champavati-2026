@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>चंपावती मोहोत्सव बीड 2026 - स्पर्धा नोंदणी</title>
+<style>
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+body {
+font-family: 'Noto Sans Devanagari', Arial, sans-serif;
+background-image: url('https://i.postimg.cc/V6q2qfwV/natraj.webp');
+background-repeat: repeat;
+background-size: 200px 200px;
+background-position: center;
+min-height: 100vh;
+position: relative;
+}
+
+.overlay {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(255, 255, 255, 0.12);
+backdrop-filter: blur(3px);
+z-index: -1;
+}
+
+.container {
+max-width: 850px;
+margin: 0 auto;
+padding: 20px;
+display: flex;
+flex-direction: column;
+align-items: center;
+min-height: 100vh;
+position: relative;
+z-index: 1;
+}
+
+.header {
+width: 100%;
+height: 220px;
+background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(255,255,255,0.92));
+border-radius: 20px;
+margin-bottom: 30px;
+display: flex;
+align-items: center;
+justify-content: center;
+box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+border: 1px solid rgba(255,255,255,0.5);
+}
+
+.logo-placeholder {
+width: 160px;
+height: 160px;
+background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+border-radius: 50%;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+font-size: 15px;
+color: #495057;
+border: 5px dashed #dee2e6;
+font-weight: 500;
+text-align: center;
+}
+
+.form-container {
+width: 100%;
+background: rgba(255, 255, 255, 0.98);
+padding: 45px;
+border-radius: 25px;
+box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+backdrop-filter: blur(20px);
+border: 2px solid rgba(255,255,255,0.6);
+position: relative;
+overflow: hidden;
+}
+
+.form-container::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+height: 6px;
+background: linear-gradient(90deg, #e74c3c, #f39c12, #27ae60, #3498db);
+background-size: 300% 100%;
+animation: gradientShift 4s ease infinite;
+}
+
+@keyframes gradientShift {
+0%, 100% { background-position: 0% 50%; }
+50% { background-position: 100% 50%; }
+}
+
+.form-title {
+text-align: center;
+color: #2c3e50;
+font-size: 32px;
+margin-bottom: 35px;
+font-weight: bold;
+text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+}
+
+.form-group {
+margin-bottom: 28px;
+position: relative;
+}
+
+label {
+display: block;
+margin-bottom: 10px;
+font-weight: 600;
+color: #34495e;
+font-size: 16px;
+}
+
+input[type="text"], input[type="tel"], select, textarea {
+width: 100%;
+padding: 16px 18px;
+border: 2px solid #e1e8ed;
+border-radius: 12px;
+font-size: 16px;
+transition: all 0.3s ease;
+background: #f8f9fa;
+font-family: inherit;
+}
+
+input:focus, select:focus, textarea:focus {
+outline: none;
+border-color: #3498db;
+box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.15);
+background: white;
+transform: translateY(-1px);
+}
+
+.required { color: #e74c3c; font-size: 18px; margin-left: 4px; }
+.error { border-color: #e74c3c !important; background: #fdf2f2; box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.15); }
+.error-message { color: #e74c3c; font-size: 14px; margin-top: 6px; display: none; font-weight: 500; }
+.note {
+background: #e8f4fd;
+border-left: 4px solid #3498db;
+padding: 12px 16px;
+border-radius: 8px;
+font-size: 14px;
+color: #2c3e50;
+margin-top: 8px;
+font-weight: 500;
+}
+.relation-hint {
+background: #fff3cd;
+border-left: 4px solid #f39c12;
+padding: 10px 14px;
+border-radius: 6px;
+font-size: 14px;
+color: #856404;
+margin-top: 6px;
+font-style: italic;
+}
+
+.submit-btn {
+width: 100%;
+padding: 20px;
+background: linear-gradient(135deg, #27ae60, #2ecc71);
+color: white;
+border: none;
+border-radius: 15px;
+font-size: 20px;
+font-weight: bold;
+cursor: pointer;
+transition: all 0.3s ease;
+text-transform: uppercase;
+letter-spacing: 1.5px;
+box-shadow: 0 8px 20px rgba(46, 204, 113, 0.3);
+}
+
+.submit-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(46, 204, 113, 0.45); }
+.submit-btn:active { transform: translateY(-1px); }
+.submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+.popup-overlay {
+display: none;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.7);
+backdrop-filter: blur(10px);
+z-index: 1000;
+justify-content: center;
+align-items: center;
+animation: fadeInOverlay 0.3s ease;
+}
+
+.popup-overlay.show { display: flex; }
+
+@keyframes fadeInOverlay {
+from { opacity: 0; }
+to { opacity: 1; }
+}
+
+.popup-content {
+background: linear-gradient(135deg, #fff, #f8f9fa);
+max-width: 600px;
+width: 90%;
+max-height: 80vh;
+border-radius: 25px;
+padding: 40px;
+text-align: center;
+box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+transform: scale(0.7);
+animation: popupSlideIn 0.4s ease forwards;
+border: 3px solid #27ae60;
+position: relative;
+overflow-y: auto;
+}
+
+@keyframes popupSlideIn {
+to {
+transform: scale(1);
+}
+}
+
+.success-icon {
+width: 80px;
+height: 80px;
+background: linear-gradient(135deg, #27ae60, #2ecc71);
+border-radius: 50%;
+margin: 0 auto 25px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 40px;
+color: white;
+box-shadow: 0 10px 30px rgba(46, 204, 113, 0.4);
+}
+
+.success-title {
+color: #e74c3c;
+font-size: 28px;
+font-weight: bold;
+margin-bottom: 15px;
+text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.success-subtitle {
+color: #27ae60;
+font-size: 18px;
+margin-bottom: 30px;
+font-weight: 500;
+}
+
+.pdf-section {
+background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+padding: 25px;
+border-radius: 20px;
+margin: 25px 0;
+border-left: 5px solid #3498db;
+}
+
+.pdf-title {
+color: #2c3e50;
+font-size: 22px;
+font-weight: bold;
+margin-bottom: 15px;
+}
+
+.pdf-desc {
+color: #555;
+font-size: 16px;
+margin-bottom: 25px;
+line-height: 1.6;
+}
+
+.pdf-download-btn {
+display: inline-block;
+padding: 18px 40px;
+background: linear-gradient(135deg, #27ae60, #2ecc71);
+color: white;
+text-decoration: none;
+border-radius: 15px;
+font-size: 20px;
+font-weight: bold;
+text-transform: uppercase;
+letter-spacing: 1px;
+box-shadow: 0 10px 25px rgba(46, 204, 113, 0.4);
+transition: all 0.3s ease;
+border: none;
+cursor: pointer;
+}
+
+.pdf-download-btn:hover {
+transform: translateY(-3px);
+box-shadow: 0 15px 35px rgba(46, 204, 113, 0.5);
+color: white;
+text-decoration: none;
+}
+
+.close-popup {
+position: absolute;
+top: 20px;
+right: 25px;
+background: #e74c3c;
+color: white;
+border: none;
+width: 40px;
+height: 40px;
+border-radius: 50%;
+font-size: 20px;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: all 0.3s ease;
+}
+
+.close-popup:hover {
+background: #c0392b;
+transform: scale(1.1);
+}
+
+.conditional-field { display: none; }
+.show { display: block; animation: fadeIn 0.6s ease; }
+
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(15px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+body { background-size: 120px 120px; }
+.container { padding: 15px; }
+.form-container { padding: 30px 25px; }
+.popup-content { padding: 30px 25px; margin: 20px; }
+}
+
+.loading {
+display: none;
+text-align: center;
+color: #27ae60;
+font-weight: bold;
+margin-top: 10px;
+}
+</style>
+</head>
+<body>
+<div class="overlay"></div>
+
+<div class="container">
+<div class="header">
+<div class="logo-placeholder">
+लोगो इथे अपलोड करा<br>
+<small>(160x160px)</small>
+</div>
+</div>
+
+<div class="form-container">
+<h1 class="form-title">चंपावती मोहोत्सव बीड 2026<br><small style="font-size: 18px; font-weight: 400;">स्पर्धा नोंदणी</small></h1>
+
+<form id="registrationForm" novalidate>
+<div class="form-group">
+<label for="schoolName">शाळेचे नाव <span class="required">*</span></label>
+<input type="text" id="schoolName" name="schoolName" required>
+<div class="error-message" id="schoolNameError">शाळेचे नाव आवश्यक आहे.</div>
+</div>
+
+<div class="form-group">
+<label for="competition">स्पर्धेचे नाव <span class="required">*</span></label>
+<select id="competition" name="competition" required onchange="handleCompetitionChange()">
+<option value="">स्पर्धा निवडा</option>
+<option value="dance">नृत्य स्पर्धा</option>
+<option value="solo_drama">एकपात्री अभिनय स्पर्धा</option>
+<option value="singing">गीत गायन स्पर्धा</option>
+<option value="painting">चित्रकला स्पर्धा</option>
+<option value="rangoli">रांगोळी स्पर्धा</option>
+</select>
+<div class="error-message" id="competitionError">स्पर्धेचे नाव निवडा.</div>
+</div>
+
+<div class="form-group conditional-field" id="danceTypeField">
+<label for="danceType">नृत्य स्पर्धेचे प्रकार <span class="required">*</span></label>
+<select id="danceType" name="danceType" onchange="handleDanceTypeChange()">
+<option value="">प्रकार निवडा</option>
+<option value="solo">सोलो नृत्य</option>
+<option value="group">ग्रुप नृत्य</option>
+<option value="duet">जोडीनृत्य</option>
+<option value="family">कुटुंब नृत्य</option>
+</select>
+<div class="error-message" id="danceTypeError">नृत्य प्रकार निवडा.</div>
+</div>
+
+<div class="form-group conditional-field" id="ageGroupField">
+<label for="ageGroup">वयोगट <span class="required">*</span></label>
+<select id="ageGroup" name="ageGroup">
+<option value="">वयोगट निवडा</option>
+<option value="1-3">इयत्ता 1ली ते 3री</option>
+<option value="4-6">इयत्ता 4थी ते 6वी</option>
+<option value="7-10">इयत्ता 7वी ते 10वी</option>
+</select>
+<div class="error-message" id="ageGroupError">वयोगट निवडा.</div>
+</div>
+
+<div class="form-group conditional-field" id="songLyricsField">
+<label for="songLyrics">गाण्याचे बोल <span class="required">*</span></label>
+<textarea id="songLyrics" name="songLyrics" rows="4" placeholder="गाण्याचे पूर्ण बोल इथे लिहा..."></textarea>
+<div class="error-message" id="songLyricsError">गाण्याचे बोल आवश्यक आहेत.</div>
+</div>
+
+<!-- कुटुंब नृत्यासाठी नाते फील्ड -->
+<div class="form-group conditional-field" id="participantRelationField">
+<label for="participantRelation">स्पर्धकाचे नाते <span class="required">*</span></label>
+<input type="text" id="participantRelation" name="participantRelation" required placeholder="उदा: आई-वडील, काका-काकू...">
+<div class="relation-hint">
+💡 उदाहरण: आई-वडील, काका-काकू, भाऊ-बहीण, आजी-आजोबा किंवा इतर कोणतेही नाते
+</div>
+<div class="error-message" id="participantRelationError">स्पर्धकाचे नाते आवश्यक आहे.</div>
+</div>
+
+<div class="form-group">
+<label for="participantName">स्पर्धकाचे पूर्ण नाव <span class="required">*</span></label>
+<input type="text" id="participantName" name="participantName" required>
+<div class="note">
+📝 <strong>नोंद:</strong> कुटुंब नृत्य, जोडीनृत्य किंवा जोडीतील स्पर्धा असल्यास दोन्ही स्पर्धकांची नावे इथे लिहा (उदा: राहुल देशमुख व प्रिया देशमुख)
+</div>
+<div class="error-message" id="participantNameError">स्पर्धकाचे नाव आवश्यक आहे.</div>
+</div>
+
+<div class="form-group">
+<label for="participantPhone">स्पर्धकाचे संपर्क क्रमांक <span class="required">*</span></label>
+<input type="tel" id="participantPhone" name="participantPhone" maxlength="10" pattern="[0-9]{10}" required>
+<div class="error-message" id="participantPhoneError">10 अंकी मोबाईल क्रमांक आवश्यक आहे.</div>
+</div>
+
+<button type="submit" class="submit-btn" id="submitBtn">नोंदणी सबमिट करा</button>
+<div class="loading" id="loadingMsg">📤 नोंदणी सेव होत आहे...</div>
+</form>
+</div>
+</div>
+
+<!-- सक्सेस पॉपअप -->
+<div id="successPopup" class="popup-overlay">
+<div class="popup-content">
+<button class="close-popup" onclick="closePopup()">&times;</button>
+
+<div class="success-icon">✅</div>
+
+<div class="success-title" id="successTitle">फॉर्म सबमिट झाला आहे</div>
+<div class="success-subtitle" id="successSubtitle">आपली नोंदणी यशस्वीपणे पूर्ण झाली आहे!</div>
+
+<div class="pdf-section">
+<div class="pdf-title">📄 चंपावती मोहोत्सव बीड 2026</div>
+<div class="pdf-desc">
+या सांस्कृतिक कार्यक्रमाची <strong>नियमावली डाऊनलोड करा</strong><br>
+स्पर्धेची सर्व माहिती, नियम व वेळापत्रक जाणून घ्या
+</div>
+<a href="चंपावती मोहोत्सव बीड 2026.pdf" download class="pdf-download-btn" target="_blank">
+📥 नियमावली डाऊनलोड करा
+</a>
+</div>
+</div>
+</div>
+
+<script>
+// ✅ DATABASE URL सक्रिय - आता काम करेल!
+const DATABASE_URL = 'https://script.google.com/macros/s/AKfycbwamYaLdsT8oYCaXAOPPqHHsM8oOLQUzqqpx5N4q44PNnXOchj0GlR9EMgfrA5odTt8/exec';
+
+function handleCompetitionChange() {
+const competition = document.getElementById('competition').value;
+
+const danceTypeField = document.getElementById('danceTypeField');
+if (competition === 'dance') {
+danceTypeField.classList.add('show');
+document.getElementById('danceType').required = true;
+} else {
+danceTypeField.classList.remove('show');
+document.getElementById('danceType').required = false;
+document.getElementById('danceType').value = '';
+hideConditionalFields();
+}
+
+const ageGroupField = document.getElementById('ageGroupField');
+const ageGroupCompetitions = ['dance', 'solo_drama', 'singing', 'painting'];
+if (ageGroupCompetitions.includes(competition)) {
+ageGroupField.classList.add('show');
+document.getElementById('ageGroup').required = true;
+} else {
+ageGroupField.classList.remove('show');
+document.getElementById('ageGroup').required = false;
+document.getElementById('ageGroup').value = '';
+}
+
+const songLyricsField = document.getElementById('songLyricsField');
+const songCompetitions = ['dance', 'singing'];
+if (songCompetitions.includes(competition)) {
+songLyricsField.classList.add('show');
+document.getElementById('songLyrics').required = true;
+} else {
+songLyricsField.classList.remove('show');
+document.getElementById('songLyrics').required = false;
+document.getElementById('songLyrics').value = '';
+}
+}
+
+function handleDanceTypeChange() {
+const danceType = document.getElementById('danceType').value;
+const relationField = document.getElementById('participantRelationField');
+
+if (danceType === 'family') {
+relationField.classList.add('show');
+document.getElementById('participantRelation').required = true;
+} else {
+relationField.classList.remove('show');
+document.getElementById('participantRelation').required = false;
+document.getElementById('participantRelation').value = '';
+}
+}
+
+function hideConditionalFields() {
+const relationField = document.getElementById('participantRelationField');
+relationField.classList.remove('show');
+document.getElementById('participantRelation').required = false;
+document.getElementById('participantRelation').value = '';
+}
+
+function showPopup() {
+document.getElementById('successPopup').classList.add('show');
+document.body.style.overflow = 'hidden';
+}
+
+function closePopup() {
+document.getElementById('successPopup').classList.remove('show');
+document.body.style.overflow = 'auto';
+}
+
+function showLoading(show) {
+const btn = document.getElementById('submitBtn');
+const loading = document.getElementById('loadingMsg');
+if (show) {
+btn.disabled = true;
+btn.textContent = 'सेव होत आहे...';
+loading.style.display = 'block';
+} else {
+btn.disabled = false;
+btn.textContent = 'नोंदणी सबमिट करा';
+loading.style.display = 'none';
+}
+}
+
+// 🚀 DATABASE इंटिग्रेशन + व्हॅलिडेशन (पूर्ण तयार!)
+document.getElementById('registrationForm').addEventListener('submit', function(e) {
+e.preventDefault();
+let isValid = true;
+
+// डायनॅमिक required फील्ड्स चेक
+const requiredFields = ['schoolName', 'competition', 'participantName', 'participantPhone'];
+
+// कंडिशनल फील्ड्स चेक
+const competition = document.getElementById('competition').value;
+if (competition === 'dance') {
+const danceType = document.getElementById('danceType').value;
+if (!danceType) {
+document.getElementById('danceType').classList.add('error');
+document.getElementById('danceTypeError').style.display = 'block';
+isValid = false;
+}
+if (danceType === 'family') {
+requiredFields.push('participantRelation');
+}
+}
+
+const ageGroupCompetitions = ['dance', 'solo_drama', 'singing', 'painting'];
+if (ageGroupCompetitions.includes(competition)) {
+requiredFields.push('ageGroup');
+}
+
+const songCompetitions = ['dance', 'singing'];
+if (songCompetitions.includes(competition)) {
+requiredFields.push('songLyrics');
+}
+
+requiredFields.forEach(field => {
+const input = document.getElementById(field);
+const error = document.getElementById(field + 'Error');
+if (input.required && !input.value.trim()) {
+input.classList.add('error');
+if (error) error.style.display = 'block';
+isValid = false;
+} else {
+input.classList.remove('error');
+if (error) error.style.display = 'none';
+}
+});
+
+const phone = document.getElementById('participantPhone').value;
+if (phone && !/^\d{10}$/.test(phone)) {
+document.getElementById('participantPhone').classList.add('error');
+document.getElementById('participantPhoneError').style.display = 'block';
+isValid = false;
+}
+
+if (isValid) {
+const formData = new FormData(this);
+const data = Object.fromEntries(formData);
+
+showLoading(true);
+
+fetch(DATABASE_URL, {
+method: 'POST',
+body: JSON.stringify(data),
+headers: {
+'Content-Type': 'application/json'
+}
+})
+.then(response => response.json())
+.then(result => {
+console.log('✅ Google Sheets मध्ये सेव झाले:', result);
+if (result.result === 'success') {
+document.getElementById('successSubtitle').textContent = `नोंदणी रो ${result.row} वर सेव झाली!`;
+}
+showPopup();
+this.reset(); // फॉर्म क्लियर करा
+})
+.catch(error => {
+console.error('❌ त्रुटी:', error);
+document.getElementById('successTitle').textContent = 'त्रुटी!';
+document.getElementById('successSubtitle').textContent = 'पुन्हा प्रयत्न करा किंवा admin ला सांगा';
+showPopup();
+})
+.finally(() => {
+showLoading(false);
+});
+}
+});
+
+// रिअल-टाईम व्हॅलिडेशन
+document.querySelectorAll('input, select, textarea').forEach(input => {
+input.addEventListener('blur', function() {
+const error = document.getElementById(this.id + 'Error');
+if (error && this.required && !this.value.trim()) {
+this.classList.add('error');
+error.style.display = 'block';
+} else if (error) {
+this.classList.remove('error');
+error.style.display = 'none';
+}
+});
+});
+
+document.getElementById('participantPhone').addEventListener('input', function(e) {
+this.value = this.value.replace(/[^0-9]/g, '');
+});
+
+// पॉपअप बाहेर क्लिक केल्यास बंद
+document.getElementById('successPopup').addEventListener('click', function(e) {
+if (e.target === this) closePopup();
+});
+</script>
+</body>
+</html>
