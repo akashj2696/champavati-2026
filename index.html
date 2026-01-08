@@ -342,24 +342,6 @@ background: #c0392b;
 transform: scale(1.1);
 }
 
-.stay-open-notice {
-background: linear-gradient(135deg, #fff3cd, #ffeaa7);
-border: 2px solid #f39c12;
-border-radius: 15px;
-padding: 15px 20px;
-margin: 20px 0;
-font-size: 16px;
-color: #856404;
-font-weight: 600;
-text-align: center;
-animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-0%, 100% { box-shadow: 0 0 0 0 rgba(243, 156, 18, 0.7); }
-50% { box-shadow: 0 0 0 10px rgba(243, 156, 18, 0); }
-}
-
 .conditional-field { display: none; }
 .show { display: block; animation: fadeIn 0.6s ease; }
 
@@ -507,26 +489,19 @@ margin: 5px;
 </div>
 </div>
 
-<!-- सक्सेस पॉपअप (NO AUTO-CLOSE TIMER) -->
+<!-- सक्सेस पॉपअप (SIMPLIFIED - NO EXTRA MESSAGES) -->
 <div id="successPopup" class="popup-overlay">
 <div class="popup-content">
 <button class="close-popup" onclick="closePopup()" title="बंद करा">&times;</button>
 
 <div class="success-icon">✅</div>
 
-<div class="success-title" id="successTitle">🎉 यशस्वी नोंदणी!</div>
-<div class="success-subtitle" id="successSubtitle">आपली नोंदणी Google Sheets मध्ये यशस्वीरित्या सेव झाली आहे!</div>
-
-<!-- 🚨 STAY OPEN NOTICE -->
-<div class="stay-open-notice">
-✨ <strong>नोंद:</strong> नियमावली डाउनलोड करण्यासाठी popup बंद करा नाही!  
-📱 मोबाईल नंबर पडताळा घेण्यासाठी वापरला जाईल
-</div>
+<div class="success-title">🎉 यशस्वी नोंदणी झाली आहे!</div>
 
 <div class="pdf-section">
 <div class="pdf-title">📄 चंपावती मोहोत्सव बीड 2026 - नियमावली</div>
 <div class="pdf-desc">
-या सांस्कृतिक कार्यक्रमाची <strong>संपूर्ण नियमावली डाऊनलोड करा</strong><br>
+या सांस्कृतिक कार्यक्रमाची <strong>संपूर्ण नियमावली डाउनलोड करा</strong><br>
 स्पर्धेची सर्व माहिती, नियम, वेळापत्रक आणि मार्गदर्शक तत्त्वे
 </div>
 <a href="चंपावती मोहोत्सव बीड 2026.pdf" download class="pdf-download-btn" target="_blank">
@@ -535,8 +510,6 @@ margin: 5px;
 </div>
 
 <div style="margin-top: 25px; padding-top: 20px; border-top: 2px dashed #bdc3c7;">
-<div style="color: #27ae60; font-size: 16px; font-weight: bold; margin-bottom: 10px;">
-✅ <span id="submittedPhone"></span> वर संपर्क केला जाईल</div>
 <button onclick="closePopup()" class="pdf-download-btn" style="background: linear-gradient(135deg, #3498db, #5dade2); width: 100%; margin-top: 10px;">
 🏠 नवीन नोंदणीसाठी मुख्य पृष्ठावर जा
 </button>
@@ -545,7 +518,7 @@ margin: 5px;
 </div>
 
 <script>
-// ✅ तुमची Google Apps Script URL (कार्यशील)
+// ✅ तुमची Google Apps Script URL
 const DATABASE_URL = 'https://script.google.com/macros/s/AKfycbxy77QuMv--t7xWNDg5FPzvQyKUm_gDHicGpDXOziJJUHNw05acKZ6IB4sjfEp3PwESTw/exec';
 
 function handleCompetitionChange() {
@@ -609,13 +582,12 @@ document.getElementById('participantRelation').value = '';
 function showPopup() {
 document.getElementById('successPopup').classList.add('show');
 document.body.style.overflow = 'hidden';
-document.getElementById('submittedPhone').textContent = document.getElementById('participantPhone').value;
 }
 
 function closePopup() {
 document.getElementById('successPopup').classList.remove('show');
 document.body.style.overflow = 'auto';
-document.getElementById('registrationForm').reset(); // Form reset करा
+document.getElementById('registrationForm').reset();
 showStatus('✅ नोंदणी यशस्वीरित्या पूर्ण झाली!', true);
 }
 
@@ -643,7 +615,6 @@ statusDiv.style.display = 'none';
 }, 5000);
 }
 
-// 🚀 100% कार्यशील फॉर्म सबमिशन (NO AUTO-CLOSE)
 document.getElementById('registrationForm').addEventListener('submit', async function(e) {
 e.preventDefault();
 let isValid = true;
@@ -719,19 +690,16 @@ try {
         cache: 'no-cache'
     });
 
-    // ✅ SUCCESS POPUP दाखवा (NO AUTO-CLOSE TIMER)
     showPopup();
     
 } catch (error) {
     console.error('Error:', error);
-    // Error असला तरी popup दाखवा (Google Apps Script GET ने नेहमी work करते)
     showPopup();
 } finally {
     showLoading(false);
 }
 });
 
-// रिअल-टाईम व्हॅलिडेशन
 document.querySelectorAll('input, select, textarea').forEach(input => {
 input.addEventListener('blur', function() {
 const error = document.getElementById(this.id + 'Error');
@@ -750,7 +718,6 @@ this.value = this.value.replace(/[^0-9]/g, '');
 if (this.value.length > 10) this.value = this.value.slice(0, 10);
 });
 
-// popup बाहेर click केल्यास बंद
 document.getElementById('successPopup').addEventListener('click', function(e) {
 if (e.target === this) closePopup();
 });
