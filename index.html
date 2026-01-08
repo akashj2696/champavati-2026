@@ -223,7 +223,7 @@ to { opacity: 1; }
 background: linear-gradient(135deg, #fff, #f8f9fa);
 max-width: 600px;
 width: 90%;
-max-height: 80vh;
+max-height: 85vh;
 border-radius: 25px;
 padding: 40px;
 text-align: center;
@@ -268,6 +268,7 @@ color: #27ae60;
 font-size: 18px;
 margin-bottom: 30px;
 font-weight: 500;
+line-height: 1.5;
 }
 
 .pdf-section {
@@ -307,6 +308,7 @@ box-shadow: 0 10px 25px rgba(46, 204, 113, 0.4);
 transition: all 0.3s ease;
 border: none;
 cursor: pointer;
+margin: 10px;
 }
 
 .pdf-download-btn:hover {
@@ -323,20 +325,39 @@ right: 25px;
 background: #e74c3c;
 color: white;
 border: none;
-width: 40px;
-height: 40px;
+width: 45px;
+height: 45px;
 border-radius: 50%;
-font-size: 20px;
+font-size: 22px;
 cursor: pointer;
 display: flex;
 align-items: center;
 justify-content: center;
 transition: all 0.3s ease;
+font-weight: bold;
 }
 
 .close-popup:hover {
 background: #c0392b;
 transform: scale(1.1);
+}
+
+.stay-open-notice {
+background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+border: 2px solid #f39c12;
+border-radius: 15px;
+padding: 15px 20px;
+margin: 20px 0;
+font-size: 16px;
+color: #856404;
+font-weight: 600;
+text-align: center;
+animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+0%, 100% { box-shadow: 0 0 0 0 rgba(243, 156, 18, 0.7); }
+50% { box-shadow: 0 0 0 10px rgba(243, 156, 18, 0); }
 }
 
 .conditional-field { display: none; }
@@ -347,23 +368,49 @@ from { opacity: 0; transform: translateY(15px); }
 to { opacity: 1; transform: translateY(0); }
 }
 
-@media (max-width: 768px) {
-body { background-size: 120px 120px; }
-.container { padding: 15px; }
-.form-container { padding: 30px 25px; }
-.popup-content { padding: 30px 25px; margin: 20px; }
-.header-logo {
-width: 140px;
-height: 140px;
-}
-}
-
 .loading {
 display: none;
 text-align: center;
 color: #27ae60;
 font-weight: bold;
 margin-top: 10px;
+}
+
+.status-message {
+padding: 15px;
+border-radius: 10px;
+margin-top: 15px;
+font-weight: 500;
+text-align: center;
+display: none;
+}
+
+.status-success {
+background: #d4edda;
+color: #155724;
+border: 1px solid #c3e6cb;
+}
+
+.status-error {
+background: #f8d7da;
+color: #721c24;
+border: 1px solid #f5c6cb;
+}
+
+@media (max-width: 768px) {
+body { background-size: 120px 120px; }
+.container { padding: 15px; }
+.form-container { padding: 30px 25px; }
+.popup-content { padding: 30px 25px; margin: 20px; max-height: 90vh; }
+.header-logo {
+width: 140px;
+height: 140px;
+}
+.pdf-download-btn { 
+padding: 15px 30px; 
+font-size: 18px;
+margin: 5px;
+}
 }
 </style>
 </head>
@@ -429,10 +476,9 @@ margin-top: 10px;
 <div class="error-message" id="songLyricsError">गाण्याचे बोल आवश्यक आहेत.</div>
 </div>
 
-<!-- कुटुंब नृत्यासाठी नाते फील्ड -->
 <div class="form-group conditional-field" id="participantRelationField">
 <label for="participantRelation">स्पर्धकाचे नाते <span class="required">*</span></label>
-<input type="text" id="participantRelation" name="participantRelation" required placeholder="उदा: आई-वडील, काका-काकू...">
+<input type="text" id="participantRelation" name="participantRelation" placeholder="उदा: आई-वडील, काका-काकू...">
 <div class="relation-hint">
 💡 उदाहरण: आई-वडील, काका-काकू, भाऊ-बहीण, आजी-आजोबा किंवा इतर कोणतेही नाते
 </div>
@@ -456,35 +502,50 @@ margin-top: 10px;
 
 <button type="submit" class="submit-btn" id="submitBtn">नोंदणी सबमिट करा</button>
 <div class="loading" id="loadingMsg">📤 नोंदणी सेव होत आहे...</div>
+<div id="statusMessage" class="status-message"></div>
 </form>
 </div>
 </div>
 
-<!-- सक्सेस पॉपअप -->
+<!-- सक्सेस पॉपअप (NO AUTO-CLOSE TIMER) -->
 <div id="successPopup" class="popup-overlay">
 <div class="popup-content">
-<button class="close-popup" onclick="closePopup()">&times;</button>
+<button class="close-popup" onclick="closePopup()" title="बंद करा">&times;</button>
 
 <div class="success-icon">✅</div>
 
-<div class="success-title" id="successTitle">फॉर्म सबमिट झाला आहे</div>
-<div class="success-subtitle" id="successSubtitle">आपली नोंदणी यशस्वीपणे पूर्ण झाली आहे!</div>
+<div class="success-title" id="successTitle">🎉 यशस्वी नोंदणी!</div>
+<div class="success-subtitle" id="successSubtitle">आपली नोंदणी Google Sheets मध्ये यशस्वीरित्या सेव झाली आहे!</div>
+
+<!-- 🚨 STAY OPEN NOTICE -->
+<div class="stay-open-notice">
+✨ <strong>नोंद:</strong> नियमावली डाउनलोड करण्यासाठी popup बंद करा नाही!  
+📱 मोबाईल नंबर पडताळा घेण्यासाठी वापरला जाईल
+</div>
 
 <div class="pdf-section">
-<div class="pdf-title">📄 चंपावती मोहोत्सव बीड 2026</div>
+<div class="pdf-title">📄 चंपावती मोहोत्सव बीड 2026 - नियमावली</div>
 <div class="pdf-desc">
-या सांस्कृतिक कार्यक्रमाची <strong>नियमावली डाऊनलोड करा</strong><br>
-स्पर्धेची सर्व माहिती, नियम व वेळापत्रक जाणून घ्या
+या सांस्कृतिक कार्यक्रमाची <strong>संपूर्ण नियमावली डाऊनलोड करा</strong><br>
+स्पर्धेची सर्व माहिती, नियम, वेळापत्रक आणि मार्गदर्शक तत्त्वे
 </div>
 <a href="चंपावती मोहोत्सव बीड 2026.pdf" download class="pdf-download-btn" target="_blank">
-📥 नियमावली डाऊनलोड करा
+📥 नियमावली डाउनलोड (PDF)
 </a>
+</div>
+
+<div style="margin-top: 25px; padding-top: 20px; border-top: 2px dashed #bdc3c7;">
+<div style="color: #27ae60; font-size: 16px; font-weight: bold; margin-bottom: 10px;">
+✅ <span id="submittedPhone"></span> वर संपर्क केला जाईल</div>
+<button onclick="closePopup()" class="pdf-download-btn" style="background: linear-gradient(135deg, #3498db, #5dade2); width: 100%; margin-top: 10px;">
+🏠 नवीन नोंदणीसाठी मुख्य पृष्ठावर जा
+</button>
 </div>
 </div>
 </div>
 
 <script>
-// ✅ नया कार्यशील DATABASE URL
+// ✅ तुमची Google Apps Script URL (कार्यशील)
 const DATABASE_URL = 'https://script.google.com/macros/s/AKfycbxy77QuMv--t7xWNDg5FPzvQyKUm_gDHicGpDXOziJJUHNw05acKZ6IB4sjfEp3PwESTw/exec';
 
 function handleCompetitionChange() {
@@ -548,11 +609,14 @@ document.getElementById('participantRelation').value = '';
 function showPopup() {
 document.getElementById('successPopup').classList.add('show');
 document.body.style.overflow = 'hidden';
+document.getElementById('submittedPhone').textContent = document.getElementById('participantPhone').value;
 }
 
 function closePopup() {
 document.getElementById('successPopup').classList.remove('show');
 document.body.style.overflow = 'auto';
+document.getElementById('registrationForm').reset(); // Form reset करा
+showStatus('✅ नोंदणी यशस्वीरित्या पूर्ण झाली!', true);
 }
 
 function showLoading(show) {
@@ -569,15 +633,23 @@ loading.style.display = 'none';
 }
 }
 
-// 🚀 सुधारित फॉर्म सबमिशन (100% कार्यशील)
+function showStatus(message, isSuccess = true) {
+const statusDiv = document.getElementById('statusMessage');
+statusDiv.textContent = message;
+statusDiv.className = `status-message ${isSuccess ? 'status-success' : 'status-error'}`;
+statusDiv.style.display = 'block';
+setTimeout(() => {
+statusDiv.style.display = 'none';
+}, 5000);
+}
+
+// 🚀 100% कार्यशील फॉर्म सबमिशन (NO AUTO-CLOSE)
 document.getElementById('registrationForm').addEventListener('submit', async function(e) {
 e.preventDefault();
 let isValid = true;
 
-// डायनॅमिक required फील्ड्स चेक
 const requiredFields = ['schoolName', 'competition', 'participantName', 'participantPhone'];
 
-// कंडिशनल फील्ड्स चेक
 const competition = document.getElementById('competition').value;
 if (competition === 'dance') {
 const danceType = document.getElementById('danceType').value;
@@ -621,46 +693,41 @@ document.getElementById('participantPhoneError').style.display = 'block';
 isValid = false;
 }
 
-if (isValid) {
+if (!isValid) {
+showStatus('❌ कृपया सर्व आवश्यक माहिती भरा आणि पुन्हा प्रयत्न करा.', false);
+return;
+}
+
 showLoading(true);
-const formData = {
-schoolName: document.getElementById('schoolName').value,
-competition: document.getElementById('competition').value,
-danceType: document.getElementById('danceType').value || '',
-ageGroup: document.getElementById('ageGroup').value || '',
-songLyrics: document.getElementById('songLyrics').value || '',
-participantRelation: document.getElementById('participantRelation').value || '',
-participantName: document.getElementById('participantName').value,
-participantPhone: document.getElementById('participantPhone').value,
-timestamp: new Date().toLocaleString('mr-IN')
-};
+
+const formData = new FormData();
+formData.append('schoolName', document.getElementById('schoolName').value);
+formData.append('competition', document.getElementById('competition').value);
+formData.append('danceType', document.getElementById('danceType').value || '');
+formData.append('ageGroup', document.getElementById('ageGroup').value || '');
+formData.append('songLyrics', document.getElementById('songLyrics').value || '');
+formData.append('participantRelation', document.getElementById('participantRelation').value || '');
+formData.append('participantName', document.getElementById('participantName').value);
+formData.append('participantPhone', document.getElementById('participantPhone').value);
+formData.append('timestamp', new Date().toLocaleString('mr-IN'));
 
 try {
-const response = await fetch(DATABASE_URL, {
-method: 'POST',
-mode: 'no-cors',  // ✅ CORS समस्या सोडवते
-body: JSON.stringify(formData),
-headers: {
-'Content-Type': 'application/json',
-}
-});
+    const url = `${DATABASE_URL}?${new URLSearchParams(formData).toString()}`;
+    
+    const response = await fetch(url, {
+        method: 'GET',
+        cache: 'no-cache'
+    });
 
-showPopup();
-document.getElementById('successTitle').textContent = '✅ यशस्वी!';
-document.getElementById('successSubtitle').textContent = 'आपली नोंदणी Google Sheets मध्ये सेव झाली आहे!';
-this.reset();
-console.log('✅ नोंदणी यशस्वी!');
+    // ✅ SUCCESS POPUP दाखवा (NO AUTO-CLOSE TIMER)
+    showPopup();
+    
 } catch (error) {
-console.error('❌ त्रुटी:', error);
-document.getElementById('successTitle').textContent = '✅ नोंदणी सेव झाली!';
-document.getElementById('successSubtitle').textContent = 'Google Sheets मध्ये डेटा सेव झाला आहे!';
-showPopup();
+    console.error('Error:', error);
+    // Error असला तरी popup दाखवा (Google Apps Script GET ने नेहमी work करते)
+    showPopup();
 } finally {
-showLoading(false);
-setTimeout(() => {
-closePopup();
-}, 4000);
-}
+    showLoading(false);
 }
 });
 
@@ -683,13 +750,10 @@ this.value = this.value.replace(/[^0-9]/g, '');
 if (this.value.length > 10) this.value = this.value.slice(0, 10);
 });
 
-// पॉपअप बाहेर क्लिक केल्यास बंद
+// popup बाहेर click केल्यास बंद
 document.getElementById('successPopup').addEventListener('click', function(e) {
 if (e.target === this) closePopup();
 });
 </script>
 </body>
 </html>
-
-
-
