@@ -429,18 +429,32 @@ margin: 5px;
 <div class="error-message" id="competitionError">स्पर्धेचे नाव निवडा.</div>
 </div>
 
+<!-- नृत्य स्पर्धेचा प्रकार -->
 <div class="form-group conditional-field" id="danceTypeField">
 <label for="danceType">नृत्य स्पर्धेचे प्रकार <span class="required">*</span></label>
 <select id="danceType" name="danceType" onchange="handleDanceTypeChange()">
 <option value="">प्रकार निवडा</option>
 <option value="solo">सोलो नृत्य</option>
 <option value="group">ग्रुप नृत्य</option>
+<option value="shishu_group">शिशु गट ग्रुप नृत्य</option>
 <option value="duet">जोडीनृत्य</option>
 <option value="family">कुटुंब नृत्य</option>
 </select>
 <div class="error-message" id="danceTypeError">नृत्य प्रकार निवडा.</div>
 </div>
 
+<!-- गीत गायन स्पर्धा प्रकार -->
+<div class="form-group conditional-field" id="singingTypeField">
+<label for="singingType">गीत गायन स्पर्धा प्रकार <span class="required">*</span></label>
+<select id="singingType" name="singingType">
+<option value="">प्रकार निवडा</option>
+<option value="solo">सोलो गायन</option>
+<option value="group">ग्रुप गायन</option>
+</select>
+<div class="error-message" id="singingTypeError">गीत गायन प्रकार निवडा.</div>
+</div>
+
+<!-- वयोगट -->
 <div class="form-group conditional-field" id="ageGroupField">
 <label for="ageGroup">वयोगट <span class="required">*</span></label>
 <select id="ageGroup" name="ageGroup">
@@ -452,12 +466,14 @@ margin: 5px;
 <div class="error-message" id="ageGroupError">वयोगट निवडा.</div>
 </div>
 
+<!-- गाण्याचे बोल -->
 <div class="form-group conditional-field" id="songLyricsField">
 <label for="songLyrics">गाण्याचे बोल <span class="required">*</span></label>
 <textarea id="songLyrics" name="songLyrics" rows="4" placeholder="गाण्याचे पूर्ण बोल इथे लिहा..."></textarea>
 <div class="error-message" id="songLyricsError">गाण्याचे बोल आवश्यक आहेत.</div>
 </div>
 
+<!-- स्पर्धकाचे नाते -->
 <div class="form-group conditional-field" id="participantRelationField">
 <label for="participantRelation">स्पर्धकाचे नाते <span class="required">*</span></label>
 <input type="text" id="participantRelation" name="participantRelation" placeholder="उदा: आई-वडील, काका-काकू...">
@@ -489,7 +505,7 @@ margin: 5px;
 </div>
 </div>
 
-<!-- सक्सेस पॉपअप (SIMPLIFIED - NO EXTRA MESSAGES) -->
+<!-- सक्सेस पॉपअप -->
 <div id="successPopup" class="popup-overlay">
 <div class="popup-content">
 <button class="close-popup" onclick="closePopup()" title="बंद करा">&times;</button>
@@ -525,37 +541,55 @@ function handleCompetitionChange() {
 const competition = document.getElementById('competition').value;
 
 const danceTypeField = document.getElementById('danceTypeField');
+const singingTypeField = document.getElementById('singingTypeField');
+const ageGroupField = document.getElementById('ageGroupField');
+const songLyricsField = document.getElementById('songLyricsField');
+
+// नृत्य स्पर्धा - नृत्य प्रकार दाखवा
 if (competition === 'dance') {
-danceTypeField.classList.add('show');
-document.getElementById('danceType').required = true;
+    danceTypeField.classList.add('show');
+    document.getElementById('danceType').required = true;
 } else {
-danceTypeField.classList.remove('show');
-document.getElementById('danceType').required = false;
-document.getElementById('danceType').value = '';
-hideConditionalFields();
+    danceTypeField.classList.remove('show');
+    document.getElementById('danceType').required = false;
+    document.getElementById('danceType').value = '';
 }
 
-const ageGroupField = document.getElementById('ageGroupField');
+// गीत गायन स्पर्धा - गायन प्रकार आणि वयोगट दाखवा
+if (competition === 'singing') {
+    singingTypeField.classList.add('show');
+    document.getElementById('singingType').required = true;
+    ageGroupField.classList.add('show');
+    document.getElementById('ageGroup').required = true;
+} else {
+    singingTypeField.classList.remove('show');
+    document.getElementById('singingType').required = false;
+    document.getElementById('singingType').value = '';
+}
+
+// वयोगट - इतर स्पर्धांसाठी
 const ageGroupCompetitions = ['dance', 'solo_drama', 'singing', 'painting'];
 if (ageGroupCompetitions.includes(competition)) {
-ageGroupField.classList.add('show');
-document.getElementById('ageGroup').required = true;
+    ageGroupField.classList.add('show');
+    document.getElementById('ageGroup').required = true;
 } else {
-ageGroupField.classList.remove('show');
-document.getElementById('ageGroup').required = false;
-document.getElementById('ageGroup').value = '';
+    ageGroupField.classList.remove('show');
+    document.getElementById('ageGroup').required = false;
+    document.getElementById('ageGroup').value = '';
 }
 
-const songLyricsField = document.getElementById('songLyricsField');
+// गाण्याचे बोल
 const songCompetitions = ['dance', 'singing'];
 if (songCompetitions.includes(competition)) {
-songLyricsField.classList.add('show');
-document.getElementById('songLyrics').required = true;
+    songLyricsField.classList.add('show');
+    document.getElementById('songLyrics').required = true;
 } else {
-songLyricsField.classList.remove('show');
-document.getElementById('songLyrics').required = false;
-document.getElementById('songLyrics').value = '';
+    songLyricsField.classList.remove('show');
+    document.getElementById('songLyrics').required = false;
+    document.getElementById('songLyrics').value = '';
 }
+
+hideConditionalFields();
 }
 
 function handleDanceTypeChange() {
@@ -563,12 +597,12 @@ const danceType = document.getElementById('danceType').value;
 const relationField = document.getElementById('participantRelationField');
 
 if (danceType === 'family') {
-relationField.classList.add('show');
-document.getElementById('participantRelation').required = true;
+    relationField.classList.add('show');
+    document.getElementById('participantRelation').required = true;
 } else {
-relationField.classList.remove('show');
-document.getElementById('participantRelation').required = false;
-document.getElementById('participantRelation').value = '';
+    relationField.classList.remove('show');
+    document.getElementById('participantRelation').required = false;
+    document.getElementById('participantRelation').value = '';
 }
 }
 
@@ -595,13 +629,13 @@ function showLoading(show) {
 const btn = document.getElementById('submitBtn');
 const loading = document.getElementById('loadingMsg');
 if (show) {
-btn.disabled = true;
-btn.innerHTML = '⏳ सेव होत आहे...';
-loading.style.display = 'block';
+    btn.disabled = true;
+    btn.innerHTML = '⏳ सेव होत आहे...';
+    loading.style.display = 'block';
 } else {
-btn.disabled = false;
-btn.innerHTML = '✅ नोंदणी सबमिट करा';
-loading.style.display = 'none';
+    btn.disabled = false;
+    btn.innerHTML = '✅ नोंदणी सबमिट करा';
+    loading.style.display = 'none';
 }
 }
 
@@ -611,7 +645,7 @@ statusDiv.textContent = message;
 statusDiv.className = `status-message ${isSuccess ? 'status-success' : 'status-error'}`;
 statusDiv.style.display = 'block';
 setTimeout(() => {
-statusDiv.style.display = 'none';
+    statusDiv.style.display = 'none';
 }, 5000);
 }
 
@@ -622,51 +656,66 @@ let isValid = true;
 const requiredFields = ['schoolName', 'competition', 'participantName', 'participantPhone'];
 
 const competition = document.getElementById('competition').value;
+
+// नृत्य स्पर्धा validation
 if (competition === 'dance') {
-const danceType = document.getElementById('danceType').value;
-if (!danceType) {
-document.getElementById('danceType').classList.add('error');
-document.getElementById('danceTypeError').style.display = 'block';
-isValid = false;
-}
-if (danceType === 'family') {
-requiredFields.push('participantRelation');
-}
+    const danceType = document.getElementById('danceType').value;
+    if (!danceType) {
+        document.getElementById('danceType').classList.add('error');
+        document.getElementById('danceTypeError').style.display = 'block';
+        isValid = false;
+    }
+    if (danceType === 'family') {
+        requiredFields.push('participantRelation');
+    }
 }
 
+// गीत गायन स्पर्धा validation
+if (competition === 'singing') {
+    const singingType = document.getElementById('singingType').value;
+    if (!singingType) {
+        document.getElementById('singingType').classList.add('error');
+        document.getElementById('singingTypeError').style.display = 'block';
+        isValid = false;
+    }
+    requiredFields.push('ageGroup');
+}
+
+// वयोगट स्पर्धा
 const ageGroupCompetitions = ['dance', 'solo_drama', 'singing', 'painting'];
 if (ageGroupCompetitions.includes(competition)) {
-requiredFields.push('ageGroup');
+    requiredFields.push('ageGroup');
 }
 
+// गाण्याचे बोल
 const songCompetitions = ['dance', 'singing'];
 if (songCompetitions.includes(competition)) {
-requiredFields.push('songLyrics');
+    requiredFields.push('songLyrics');
 }
 
 requiredFields.forEach(field => {
-const input = document.getElementById(field);
-const error = document.getElementById(field + 'Error');
-if (input.required && !input.value.trim()) {
-input.classList.add('error');
-if (error) error.style.display = 'block';
-isValid = false;
-} else {
-input.classList.remove('error');
-if (error) error.style.display = 'none';
-}
+    const input = document.getElementById(field);
+    const error = document.getElementById(field + 'Error');
+    if (input.required && !input.value.trim()) {
+        input.classList.add('error');
+        if (error) error.style.display = 'block';
+        isValid = false;
+    } else {
+        input.classList.remove('error');
+        if (error) error.style.display = 'none';
+    }
 });
 
 const phone = document.getElementById('participantPhone').value;
 if (phone && !/^\d{10}$/.test(phone)) {
-document.getElementById('participantPhone').classList.add('error');
-document.getElementById('participantPhoneError').style.display = 'block';
-isValid = false;
+    document.getElementById('participantPhone').classList.add('error');
+    document.getElementById('participantPhoneError').style.display = 'block';
+    isValid = false;
 }
 
 if (!isValid) {
-showStatus('❌ कृपया सर्व आवश्यक माहिती भरा आणि पुन्हा प्रयत्न करा.', false);
-return;
+    showStatus('❌ कृपया सर्व आवश्यक माहिती भरा आणि पुन्हा प्रयत्न करा.', false);
+    return;
 }
 
 showLoading(true);
@@ -675,6 +724,7 @@ const formData = new FormData();
 formData.append('schoolName', document.getElementById('schoolName').value);
 formData.append('competition', document.getElementById('competition').value);
 formData.append('danceType', document.getElementById('danceType').value || '');
+formData.append('singingType', document.getElementById('singingType').value || '');
 formData.append('ageGroup', document.getElementById('ageGroup').value || '');
 formData.append('songLyrics', document.getElementById('songLyrics').value || '');
 formData.append('participantRelation', document.getElementById('participantRelation').value || '');
@@ -702,14 +752,14 @@ try {
 
 document.querySelectorAll('input, select, textarea').forEach(input => {
 input.addEventListener('blur', function() {
-const error = document.getElementById(this.id + 'Error');
-if (error && this.required && !this.value.trim()) {
-this.classList.add('error');
-error.style.display = 'block';
-} else if (error) {
-this.classList.remove('error');
-error.style.display = 'none';
-}
+    const error = document.getElementById(this.id + 'Error');
+    if (error && this.required && !this.value.trim()) {
+        this.classList.add('error');
+        error.style.display = 'block';
+    } else if (error) {
+        this.classList.remove('error');
+        error.style.display = 'none';
+    }
 });
 });
 
